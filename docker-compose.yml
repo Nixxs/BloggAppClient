@@ -1,0 +1,38 @@
+version: '3.3'
+
+services:
+  mysqldb:
+    image: mysql:latest
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'blogdb'
+      MYSQL_ROOT_PASSWORD: 'pa55word'
+    ports:
+      - '3306:3306'
+    expose:
+      - '3306'
+    volumes:
+      - mysql_data:/var/lib/mysql
+    container_name: mysqldb
+
+  blog:
+    image: bloggingapp-app
+    restart: always
+    environment:
+      - DB_NAME=blogdb
+      - DB_USERNAME=root
+      - DB_PASSWORD=pa55word
+      - DB_HOST=mysqldb
+      - DB_PORT=3306
+      - DB_SSL=false
+      - BASE_URL=http://localhost:3000
+      - PORT=3000
+    ports:
+      - '3000:3000'
+    depends_on:
+      mysqldb:
+        condition: service_started
+    container_name: blog
+
+volumes:
+  mysql_data:
