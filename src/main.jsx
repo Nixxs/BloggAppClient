@@ -14,12 +14,24 @@ import '@fontsource/roboto/700.css';
 const lightTheme = createTheme({
   palette: {
     mode: 'light',
+    secondary: {
+      main: "#3d3d3d",
+    },
+    background: {
+      grey: "#dedede"
+    }
   },
 });
 
 const darkTheme = createTheme({
   palette: {
     mode: 'dark',
+    secondary: {
+      main: "#1976D2",
+    },
+    background: {
+      grey: "#3F3F3F"
+    }
   },
 });
 
