@@ -18,6 +18,7 @@ const pages = [
     { name: 'Home', path: '/' },
     { name: 'Users', path: '/users' },
     { name: 'Blog', path: '/blog' },
+    { name: 'Theme', path: '/theme' },
 ];
 const settings = [
     { name: 'Home', path: '/' },
