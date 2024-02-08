@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 import Users from "./pages/Users";
 import Blog from "./pages/Blog";
 import Theme from "./pages/Theme"
+import UserProfile from './features/UserProfile';
 
 const router = createBrowserRouter([
   {

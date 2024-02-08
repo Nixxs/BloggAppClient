@@ -5,10 +5,11 @@ import ListItemText from "@mui/material/ListItemText";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ListItemSecondaryAction from "@mui/material/ListItemSecondaryAction";
+import { useContext } from "react";
+import { UserContext } from "../../pages/Users";
 
 function UserManager() {
-    const [users, setUsers] = useState([]);
-    const [selectedUser, setSelectedUser] = useState(null);
+    const { users, setUsers, selectedUser, setSelectedUser } = useContext(UserContext);
 
     useEffect(() => {
         fetch('http://localhost:3000/api/users')
@@ -48,6 +49,7 @@ function UserManager() {
         .then((data) => {
             if (data.result === 200){
                 const updatedUsers = users.filter(user => user.id !== userID);
+                setSelectedUser(null);
                 setUsers(updatedUsers);
             }
         })
@@ -56,22 +58,25 @@ function UserManager() {
 
     const UserList = () => {
         return (
-            <List sx={{
-                width: '100%',
-                maxWidth: 360,
-                bgcolor: 'background.paper',
-            }}>
-            {users.map((user) => (
-                <ListItemButton key={user.id} selected={selectedUser == user.id} onClick={handleListItemClick} data-id={user.id}>
-                    <ListItemText primary={user.name} secondary={user.email} />
-                    <ListItemSecondaryAction>
-                        <IconButton edge="end" aria-label="delete" onClick={handleUserDelete} data-id={user.id}>
-                            <DeleteIcon />
-                        </IconButton>
-                    </ListItemSecondaryAction>
-                </ListItemButton>
-            ))}
-          </List>
+            <>
+                <h1>User List:</h1>
+                <List sx={{
+                    width: '100%',
+                    maxWidth: 360,
+                    bgcolor: 'background.paper',
+                }}>
+                {users.map((user) => (
+                    <ListItemButton key={user.id} selected={selectedUser == user.id} onClick={handleListItemClick} data-id={user.id}>
+                        <ListItemText primary={user.name} secondary={user.email} />
+                        <ListItemSecondaryAction>
+                            <IconButton edge="end" aria-label="delete" onClick={handleUserDelete} data-id={user.id}>
+                                <DeleteIcon />
+                            </IconButton>
+                        </ListItemSecondaryAction>
+                    </ListItemButton>
+                ))}
+                </List>
+            </>
         );
     }
 
