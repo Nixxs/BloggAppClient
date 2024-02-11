@@ -1,12 +1,11 @@
-import { useContext } from 'react';
-import { UserContext } from '../../pages/Users';
+import { useContext } from "react";
+import { UserContext } from "../../pages/Users";
 
 function UserProfile() {
-    const { users, setUsers, selectedUser, setSelectedUser } = useContext(UserContext);
-    console.log(users);
+    const { state, dispatch } = useContext(UserContext);
 
-    if(selectedUser) {
-        const user = users.find(user => user.id === parseInt(selectedUser));
+    if(state.selectedUser) {
+        const user = state.users.find(user => user.id === parseInt(state.selectedUser));
 
         return (
             <div>
