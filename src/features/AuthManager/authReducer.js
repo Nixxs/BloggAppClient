@@ -10,10 +10,9 @@ export const authReducer = (state, action) => {
     case "LOGIN_REQUEST":
       return { ...state, error: null };
     case "LOGIN_SUCCESS":
-      console.log(action.payload);
       return {
         ...state,
-        isAuthenticated: true,
+        isAuthticated: true,
         user: action.payload.user,
         token: action.payload.token,
       };
@@ -24,7 +23,7 @@ export const authReducer = (state, action) => {
     };
     case "LOGOUT":
       return { ...state, 
-        isAuthenticated: false, 
+        isAuthticated: false, 
         user: null, 
         token: null 
     };

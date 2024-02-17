@@ -4,7 +4,7 @@ import Button from "@mui/material/Button";
 import Alert from "@mui/material/Alert";
 
 function Login() {
-    const { state: {error}, dispatch } = useAuth(); 
+    const { authState: {error}, dispatch } = useAuth(); 
 
     const handleLogin = (event) => {
         event.preventDefault();

@@ -7,32 +7,40 @@ import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ListItemSecondaryAction from "@mui/material/ListItemSecondaryAction";
 import Alert from "@mui/material/Alert";
+import { useAuth } from "../AuthManager/AuthContext";
 
 function UserManager() {
     const { state, dispatch } = useContext(UserContext);
+    const { authState: {token} } = useAuth(); 
 
     useEffect(() => {
-        fetch('http://localhost:3000/api/users')
-            .then(response => response.json())
-            .then((userData) => {
-                switch (userData.result) {
-                    case 200:
-                        dispatch({ type: "SET_USERS", payload: userData.data });
-                        break;
-                    case 404:
-                        dispatch({ type: "FETCH_USERS_FAILURE", payload: userData.message });
-                        break;
-                    case 500:
-                        dispatch({ type: "FETCH_USERS_FAILURE", payload: userData.message });
-                        break;
-                    default:
-                        dispatch({ type: "FETCH_USERS_FAILURE", payload: "unknown error while fetching user data" });
-                        break;
-                }
-            })
-            .catch((error) => {
-                dispatch({ type: "FETCH_USERS_FAILURE", payload: `something went wrong fetching the data: ${error}` });
-            });
+        fetch('http://localhost:3000/api/users', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                "Authorization": token,
+            },
+        })
+        .then(response => response.json())
+        .then((userData) => {
+            switch (userData.result) {
+                case 200:
+                    dispatch({ type: "SET_USERS", payload: userData.data });
+                    break;
+                case 404:
+                    dispatch({ type: "FETCH_USERS_FAILURE", payload: userData.message });
+                    break;
+                case 500:
+                    dispatch({ type: "FETCH_USERS_FAILURE", payload: userData.message });
+                    break;
+                default:
+                    dispatch({ type: "FETCH_USERS_FAILURE", payload: "unknown error while fetching user data" });
+                    break;
+            }
+        })
+        .catch((error) => {
+            dispatch({ type: "FETCH_USERS_FAILURE", payload: `something went wrong fetching the data: ${error}` });
+        });
     }, []);
 
     const handleListItemClick = (event) => {

@@ -13,6 +13,7 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import SimCardIcon from '@mui/icons-material/SimCard';
 import { NavLink } from "react-router-dom";
+import { useAuth } from "../../features/AuthManager/AuthContext";
 
 const pages = [
     { name: 'Home', path: '/' },
@@ -29,6 +30,7 @@ const settings = [
 function Header() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const { authState } = useAuth();
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -154,11 +156,16 @@ function Header() {
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-              </IconButton>
-            </Tooltip>
+            {authState.isAuthticated ? (            
+              <Tooltip title="Open settings">
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                  <Avatar alt={authState.user.name} src="/static/images/avatar/2.jpg" />
+                </IconButton>
+              </Tooltip>) : (
+                <Button component={NavLink} to="/">Login</Button>
+              )
+            }
+
             <Menu
               sx={{ mt: "45px" }}
               id="menu-appbar"

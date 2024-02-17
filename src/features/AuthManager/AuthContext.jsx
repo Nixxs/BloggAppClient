@@ -5,9 +5,9 @@ import { login, logout } from "./AuthActions";
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
-    const [state, dispatch] = useReducer(authReducer, initialState);
+    const [authState, dispatch] = useReducer(authReducer, initialState);
     return (
-        <AuthContext.Provider value={{ state, dispatch }}>
+        <AuthContext.Provider value={{ authState, dispatch }}>
             {children}
         </AuthContext.Provider>
     );
